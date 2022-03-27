@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 // 拦截路径，比如说在本地启动服务则在浏览器中输入的url是：localhost:8080/user
 @RequestMapping("/user")
 // @RequestMapping如果没有指定请求方式，将接收Get、Post、Head、Options等所有的请求方式.
-public class user {
+public class JsonUser {
     @GetMapping("/detail/{id}")
     // @PathVariable 处理请求 url 路径中的参数 /user/{id}
     // @RequestParam - 处理问号后面的参数 - （可以配置3个参数 defaultValue、required、value）

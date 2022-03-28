@@ -19,7 +19,8 @@ import java.util.List;
 public class School {
 
     // 对象转为json字符串
-    @GetMapping("/get")
+    @RequestMapping("/user/list")
+//    @GetMapping("/get")
     public String get(){
         List<Person> listOfPersons = new ArrayList<Person>();
         listOfPersons.add(new Person(15, "John Doe", new Date()));

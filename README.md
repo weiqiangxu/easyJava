@@ -26,6 +26,7 @@
 17. oauth2
 18. 过滤器javax.servlet.Filter
 19. 拦截器handlerInterceptor
+20. spring i18n
 
 ### Java基础知识
 

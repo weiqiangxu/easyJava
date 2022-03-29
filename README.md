@@ -26,6 +26,7 @@
 17. oauth2
 18. 过滤器javax.servlet.Filter
 19. 拦截器handlerInterceptor
+20. spring异常处理机制
 
 ### Java基础知识
 

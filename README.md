@@ -28,6 +28,7 @@
 19. 拦截器handlerInterceptor
 20. spring异常处理机制
 21. spring i18n
+22. springboot配置注入
 
 ### Java基础知识
 

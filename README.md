@@ -29,6 +29,7 @@
 20. spring异常处理机制
 21. spring i18n
 22. Message Queue
+23. springboot配置注入
 
 ### Java基础知识
 

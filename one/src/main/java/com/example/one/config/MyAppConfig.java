@@ -9,6 +9,15 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 //@Configuration注解的类中，使用@Bean注解标注的方法，返回的类型都会直接注册为bean
 @Configuration
 public class MyAppConfig implements WebMvcConfigurer {
+
+    // 相当于说配置拦截器的逻辑是
+    // 实现WebMvcConfigurer的addInterceptors
+    // 其中addInterceptors注入自己的拦截器
+
+    // 这里需要注意的是，过滤器注入的时候才指定过滤那些URL
+    // 也就是说，过滤器只是定义了行为
+    // 但是具体用在哪些地方是由addInterceptors决定的
+
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         MyInterceptor myInterceptor = new MyInterceptor();

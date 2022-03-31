@@ -28,6 +28,7 @@
 19. 拦截器handlerInterceptor
 20. spring异常处理机制
 21. spring i18n
+22. Message Queue
 
 ### Java基础知识
 

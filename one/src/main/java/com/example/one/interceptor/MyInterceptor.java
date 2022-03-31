@@ -6,6 +6,8 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+// 实现拦截器HandlerInterceptor
+// 然后通过实现WebMvcConfigurer->addInterceptors注入进去
 public class MyInterceptor implements HandlerInterceptor {
     // 1. 定义拦截器
     // 2. 使用JavaConfig注册拦截器

@@ -3,10 +3,13 @@ package com.example.one.controller;
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.io.IoUtil;
 import com.example.one.po.ZipFileResult;
+import org.apache.any23.encoding.TikaEncodingDetector;
+import org.apache.commons.io.IOUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.*;
+import java.nio.charset.Charset;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 import java.util.zip.ZipInputStream;
@@ -23,24 +26,34 @@ public class TestZip {
 
     // 对象转为json字符串
     @RequestMapping("/getFileType")
-    public String getFileType(){
+    public byte[] getFileType(){
         try{
             ZipFileResult z = getFileByteContent("/Users/xuweiqiang/Documents/demo/a.zip");
-            return z.getFileType();
+            return z.getContentByte();
         }catch (Exception e){
-            return "catch zip exception " + e.getMessage();
+            System.out.println("catch zip exception " + e.getMessage());
+            return null;
         }
+    }
+
+    public static Charset guessCharset(InputStream is) throws IOException {
+        return Charset.forName(new TikaEncodingDetector().guessEncoding(is));
     }
 
     public ZipFileResult getFileByteContent(String fileName) throws Exception {
         ZipFileResult zipFileResult;
         File f = new File(fileName);
+        File t = new File(fileName);
         String tmpZip = "/Users/xuweiqiang/Documents/demo/tmp.zip";
         try {
             InputStream inputStream = new FileInputStream(f);
+            InputStream i = new FileInputStream(t);
+            //第一次处理stream，得到encoding
+            Charset ch = guessCharset(i);
+            System.out.println(ch);
             File file = convertToFile(inputStream, tmpZip);
             // 获取压缩文件的文件类型和解压后的字节流
-            zipFileResult = readZipFile(file);
+            zipFileResult = readZipFile(file,ch);
             // 删除临时文件
             FileUtil.del(tmpZip);
         } catch (Exception ipu) {
@@ -65,14 +78,15 @@ public class TestZip {
     }
 
     // File对象获取压缩文件
-    public ZipFileResult readZipFile(File file) throws IOException {
+    public ZipFileResult readZipFile(File file,Charset ch) throws IOException {
         boolean validFile = checkZip(file);
         if (!validFile) {
             return null;
         }
-        ZipFile zf = new ZipFile(file);
+        ZipFile zf = new ZipFile(file,ch);
         InputStream in = new BufferedInputStream(new FileInputStream(file));
-        ZipInputStream zin = new ZipInputStream(in);
+        // 按指定编码获取zip对象
+        ZipInputStream zin = new ZipInputStream(in,ch);
         ZipEntry ze;
         String fileType = null;
         byte[] contentBytes = new byte[0];
@@ -88,9 +102,11 @@ public class TestZip {
                 break;
             }
         }
+        // 不close可以吗，会有什么影响
         in.close();
         zin.close();
         zf.close();
+        System.out.println("contentBytes = "+ contentBytes[0] );
         // lombok的builder创建
         return ZipFileResult.builder().fileType(fileType).contentByte(contentBytes).build();
     }
@@ -104,6 +120,7 @@ public class TestZip {
         long fileCount = 0;
         while ((ze = zin.getNextEntry()) != null) {
             if (!ze.isDirectory()) {
+                // mac文件如果ide编辑过会进来2次
                 fileCount++;
                 long size = ze.getSize();
                 if (size > 0) {
@@ -112,6 +129,6 @@ public class TestZip {
             }
         }
         zin.close();
-        return fileCount == 1 && totalSize < FILE_SIZE_LIMIT;
+        return totalSize < FILE_SIZE_LIMIT;
     }
 }

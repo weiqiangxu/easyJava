@@ -11,16 +11,16 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.*;
 
-public class CustomAuthenticationFailureHandler
-        implements AuthenticationFailureHandler {
+
+// 提交账号密码之后验证失败处理器
+// host/login登陆页面输入账号密码验证失败以后的处理器
+public class CustomAuthenticationFailureHandler implements AuthenticationFailureHandler {
 
     private ObjectMapper objectMapper = new ObjectMapper();
 
     @Override
-    public void onAuthenticationFailure(
-            HttpServletRequest request,
-            HttpServletResponse response,
-            AuthenticationException exception)
+    public void onAuthenticationFailure( HttpServletRequest request, HttpServletResponse response,
+                                         AuthenticationException exception)
             throws IOException, ServletException {
 
         response.setStatus(HttpStatus.UNAUTHORIZED.value());

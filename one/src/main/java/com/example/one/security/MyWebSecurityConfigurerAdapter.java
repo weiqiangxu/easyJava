@@ -1,18 +1,22 @@
 package com.example.one.security;
 
-import com.example.one.handle.CustomAuthenticationFailureHandler;
-import com.example.one.handle.MyAccessDeniedHandler;
-import com.example.one.handle.MyAuthenticationEntryPoint;
+import com.example.one.handle.*;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.encrypt.BytesEncryptor;
+import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+
+import java.util.Arrays;
 
 @EnableWebSecurity // 开启WebSecurity模式
 public class MyWebSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter {
@@ -43,6 +47,12 @@ public class MyWebSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter
         this.myAuthenticationEntryPoint = myAuthenticationEntryPoint;
     }
 
+    private MyAuthenticationProvider myAuthenticationProvider;
+    @Autowired
+    public void setMyAuthenticationProvider(MyAuthenticationProvider myAuthenticationProvider){
+        this.myAuthenticationProvider = myAuthenticationProvider;
+    }
+
     // 定制请求的授权规则
     // 可以指定我想给哪些路由的访问增加限制
     // 我想给哪些路由的访问开放
@@ -62,7 +72,7 @@ public class MyWebSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter
         http.formLogin().failureHandler(customAuthenticationFailureHandler());
 
         // 添加认证失败后的处理器
-        // http.authenticationProvider()
+        // http.authenticationProvider(myAuthenticationProvider);
 
         // AccessDeniedException(权限异常)
         // 比如 @PreAuthorize("hasRole('ROLE_HELLO')") 不过，没有角色\权限点的时候的异常
@@ -75,7 +85,8 @@ public class MyWebSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter
 
         // 写了以后，当没有登陆时候，不再自动跳转login页面，而是走了这一块逻辑
         // 也就是说这个异常包括了没有登陆时候抛出的异常的处理
-        http.exceptionHandling().authenticationEntryPoint(myAuthenticationEntryPoint);
+        // 注册了自己的处理器当访问 http://localhost:8080/login 的时候会直接抛出 Whitelabel Error Page
+        // http.exceptionHandling().authenticationEntryPoint(myAuthenticationEntryPoint);
 
         // 关闭表单登陆功能 - 没关闭的时候会自动在没权限的时候跳转到form表单
         // http.formLogin().disable();
@@ -95,6 +106,8 @@ public class MyWebSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter
     }
 
 
+
+
     // 定义认证规则
     // 这个定义了认证规则，比如说我需要用户名root加上密码123456就可以通过认证
     // 可以auth.inMemoryAuthentication().withUser("xxx").password("xxx").roles("admin")
@@ -106,10 +119,60 @@ public class MyWebSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter
     // 大概有:token实现\session实现
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication()
-                .passwordEncoder(new BCryptPasswordEncoder())
-                .withUser("admin")
-                .password(new BCryptPasswordEncoder().encode("123456"))
-                .roles("admin","user");
+        // 基于内存添加用户名和密码
+        // auth.inMemoryAuthentication()
+        //        .passwordEncoder(new BCryptPasswordEncoder())
+        //        .withUser("admin")
+        //        .password(new BCryptPasswordEncoder().encode("123456"))
+        //        .roles("admin","user");
+        auth.authenticationProvider(myAuthenticationProvider);
+    }
+
+
+
+
+    /**
+     * 对密码进行加密的实例
+     * @return
+     */
+    @Bean
+    PasswordEncoder passwordEncoder() {
+        /**
+         * 不加密所以使用NoOpPasswordEncoder
+         * 更多可以参考PasswordEncoder 的默认实现官方推荐使用: BCryptPasswordEncoder，BCryptPasswordEncoder
+         */
+        return NoOpPasswordEncoder.getInstance();
+    }
+
+
+    private MyUserDetailsService myUserDetailsService;
+    @Autowired
+    public void setMyUserDetailsService(MyUserDetailsService myUserDetailsService){
+        this.myUserDetailsService = myUserDetailsService;
+    }
+
+    /**
+     * 自定义provider
+     * @return
+     */
+    public CodeAuthenticationProvider codeAuthenticationProvider() {
+        CodeAuthenticationProvider myAuthenticationProvider = new CodeAuthenticationProvider();
+        //设置password Encoder
+        myAuthenticationProvider.setPasswordEncoder(passwordEncoder());
+        //设置UserDetailsService 可以参考第一篇登录使用例子自定义userDetailServices
+        myAuthenticationProvider.setUserDetailsService(myUserDetailsService);
+        return myAuthenticationProvider;
+    }
+
+    /**
+     * 重写父类自定义AuthenticationManager 将provider注入进去
+     * 当然我们也可以考虑不重写 在父类的manager里面注入provider
+     * @return
+     * @throws Exception
+     */
+    @Override
+    protected AuthenticationManager authenticationManager() throws Exception {
+        ProviderManager manager = new ProviderManager(Arrays.asList(codeAuthenticationProvider()));
+        return manager;
     }
 }

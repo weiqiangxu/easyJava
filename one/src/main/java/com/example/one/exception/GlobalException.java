@@ -21,6 +21,7 @@ public class GlobalException {
         // ModelAndView mv = new ModelAndView();
         // mv.addObject("error", e.toString());
         // mv.setViewName("error2");
+        System.out.println("all exception handle");
         return "统一的异常处理:"+e.toString();
     }
 }

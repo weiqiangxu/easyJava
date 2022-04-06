@@ -38,3 +38,4 @@
 3. IDEA各个功能按钮和快捷键
 4. Maven
 5. java debug调试工具使用
+6. lombok builder

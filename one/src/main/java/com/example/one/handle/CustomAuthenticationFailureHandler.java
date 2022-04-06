@@ -22,7 +22,7 @@ public class CustomAuthenticationFailureHandler implements AuthenticationFailure
     public void onAuthenticationFailure( HttpServletRequest request, HttpServletResponse response,
                                          AuthenticationException exception)
             throws IOException, ServletException {
-
+        System.out.println("start custom auth fail");
         response.setStatus(HttpStatus.UNAUTHORIZED.value());
         Map<String,Integer> test = new HashMap<String, Integer>();
         test.put("age",18);

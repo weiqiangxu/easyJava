@@ -53,6 +53,14 @@ public class MyWebSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter
         this.myAuthenticationProvider = myAuthenticationProvider;
     }
 
+    private UserSmsAuthenticationProvider userSmsAuthenticationProvider;
+    @Autowired
+    public void setUserSmsAuthenticationProvider(UserSmsAuthenticationProvider userSmsAuthenticationProvider){
+        this.userSmsAuthenticationProvider = userSmsAuthenticationProvider;
+    }
+
+
+
     // 定制请求的授权规则
     // 可以指定我想给哪些路由的访问增加限制
     // 我想给哪些路由的访问开放
@@ -125,54 +133,8 @@ public class MyWebSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter
         //        .withUser("admin")
         //        .password(new BCryptPasswordEncoder().encode("123456"))
         //        .roles("admin","user");
-        auth.authenticationProvider(myAuthenticationProvider);
+        auth.authenticationProvider(myAuthenticationProvider)
+                .authenticationProvider(userSmsAuthenticationProvider);
     }
 
-
-
-
-    /**
-     * 对密码进行加密的实例
-     * @return
-     */
-    @Bean
-    PasswordEncoder passwordEncoder() {
-        /**
-         * 不加密所以使用NoOpPasswordEncoder
-         * 更多可以参考PasswordEncoder 的默认实现官方推荐使用: BCryptPasswordEncoder，BCryptPasswordEncoder
-         */
-        return NoOpPasswordEncoder.getInstance();
-    }
-
-
-    private MyUserDetailsService myUserDetailsService;
-    @Autowired
-    public void setMyUserDetailsService(MyUserDetailsService myUserDetailsService){
-        this.myUserDetailsService = myUserDetailsService;
-    }
-
-    /**
-     * 自定义provider
-     * @return
-     */
-    public CodeAuthenticationProvider codeAuthenticationProvider() {
-        CodeAuthenticationProvider myAuthenticationProvider = new CodeAuthenticationProvider();
-        //设置password Encoder
-        myAuthenticationProvider.setPasswordEncoder(passwordEncoder());
-        //设置UserDetailsService 可以参考第一篇登录使用例子自定义userDetailServices
-        myAuthenticationProvider.setUserDetailsService(myUserDetailsService);
-        return myAuthenticationProvider;
-    }
-
-    /**
-     * 重写父类自定义AuthenticationManager 将provider注入进去
-     * 当然我们也可以考虑不重写 在父类的manager里面注入provider
-     * @return
-     * @throws Exception
-     */
-    @Override
-    protected AuthenticationManager authenticationManager() throws Exception {
-        ProviderManager manager = new ProviderManager(Arrays.asList(codeAuthenticationProvider()));
-        return manager;
-    }
 }

@@ -22,12 +22,21 @@ import java.util.Collection;
  */
 @Component
 public class UserSmsAuthenticationProvider implements AuthenticationProvider {
-    @Autowired
+
     private MyUserDetailsService myUserDetailsService;
+
     @Autowired
+    public void setMyUserDetailsService(MyUserDetailsService myUserDetailsService) {
+        this.myUserDetailsService = myUserDetailsService;
+    }
+
     private PasswordEncoder passwordEncoder;
+
     @Autowired
-    private ApplicationEventPublisher publisher;
+    public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
+        this.passwordEncoder = passwordEncoder;
+    }
+
     /**
      * @Description 认证处理，返回一个Authentication的实现类则代表认证成功，返回null则代表认证失败
      * @Date 2019/7/5 15:19
@@ -58,7 +67,10 @@ public class UserSmsAuthenticationProvider implements AuthenticationProvider {
         }
         //获取用户权限信息
         Collection<? extends GrantedAuthority> authorities = user.getAuthorities();
-        return new UsernamePasswordAuthenticationToken(user, smscode, authorities);
+
+        UsernamePasswordAuthenticationToken u = new UsernamePasswordAuthenticationToken(user, smscode, authorities);
+        System.out.println("sms u.getPrincipal "+u.getPrincipal().toString());
+        return u;
 
     }
     /**
@@ -68,6 +80,7 @@ public class UserSmsAuthenticationProvider implements AuthenticationProvider {
      */
     @Override
     public boolean supports(Class<?> aClass) {
+        System.out.println("sms aClass.getName = "+aClass.getName());
         return aClass.equals(UsernamePasswordAuthenticationToken.class);
     }
 

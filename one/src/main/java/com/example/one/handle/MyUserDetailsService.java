@@ -4,6 +4,8 @@ import com.alibaba.fastjson.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -11,9 +13,12 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
+import org.springframework.util.Assert;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 @Component
 public class MyUserDetailsService implements UserDetailsService {
@@ -30,13 +35,22 @@ public class MyUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         System.out.println("---用户信息验证----"+username);
-        GrantedAuthority authority = new UserGrantedAuthority("username", username);
 
-        JSONArray array = new JSONArray();
-        array.add("/a/b");
-        array.add("/a/c");
-        array.add("/a/d");
-        GrantedAuthority interfaces = new UserGrantedAuthority("interfaces", array);
+        // 添加角色
+        List<GrantedAuthority> authorities = new ArrayList<>();
+        List<String> roles = new ArrayList<>();
+        roles.add("admin");
+        roles.add("test");
+        for (String role : roles) {
+            Assert.isTrue(!role.startsWith("ROLE_"), () -> role
+                    + " cannot start with ROLE_ (it is automatically added)");
+            authorities.add(new SimpleGrantedAuthority("ROLE_" + role));
+        }
+        List<GrantedAuthority> authList = new ArrayList<>(authorities);
+
+        // 添加权限点
+        List<GrantedAuthority> permissionList = AuthorityUtils.createAuthorityList("test","del","add");
+        authList.addAll(permissionList);
         /**
          isEnabled 账户是否启用
          isAccountNonExpired 账户没有过期
@@ -45,12 +59,15 @@ public class MyUserDetailsService implements UserDetailsService {
          */
         String p = passwordEncoder.encode("123");
         System.out.println("password encode "+p);
-        return new User(username, p,
+        User u =  new User(username, p,
                 true,
                 true,
                 true,
                 true,
-                Arrays.asList(authority, interfaces));
+                authList);
+
+        System.out.println("my user detail auth "+u.getAuthorities().toString());
+        return u;
     }
 
 

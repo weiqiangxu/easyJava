@@ -20,9 +20,15 @@ public class TestSecurity {
 
     // @PreAuthorize 注解的异常，抛出AccessDeniedException异常，
     // 不会被accessDeniedHandler捕获，而是会被全局异常捕获 - 就会导致accessDenyHandler失效
-    @PreAuthorize("hasRole('ROLE_HELLO')")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping("/hello")
     public String hello(){
         return "HELLO";
+    }
+
+    @PreAuthorize("hasAnyAuthority('del')")
+    @GetMapping("/del")
+    public String del(){
+        return "del success";
     }
 }

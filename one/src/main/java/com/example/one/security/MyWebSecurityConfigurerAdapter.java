@@ -71,7 +71,7 @@ public class MyWebSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter
         // 限制部分链接访问
         http.authorizeRequests().antMatchers("/security/get").hasRole("admin");
         // 角色test才可以访问
-        http.authorizeRequests().antMatchers("/security/test").hasRole("test");
+        http.authorizeRequests().antMatchers("/security/test").hasAuthority("test");
 
         // 验证所有链接
         // http.authorizeRequests().anyRequest().authenticated();
@@ -128,11 +128,12 @@ public class MyWebSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         // 基于内存添加用户名和密码
-        // auth.inMemoryAuthentication()
-        //        .passwordEncoder(new BCryptPasswordEncoder())
-        //        .withUser("admin")
-        //        .password(new BCryptPasswordEncoder().encode("123456"))
-        //        .roles("admin","user");
+//         auth.inMemoryAuthentication()
+//                .passwordEncoder(new BCryptPasswordEncoder())
+//                .withUser("admin")
+//                .password(new BCryptPasswordEncoder().encode("123456"))
+//                 .authorities("test")
+//                .roles("admin","user");
         auth.authenticationProvider(myAuthenticationProvider)
                 .authenticationProvider(userSmsAuthenticationProvider);
     }

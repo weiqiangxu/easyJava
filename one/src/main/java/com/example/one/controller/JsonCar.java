@@ -1,6 +1,7 @@
 package com.example.one.controller;
 
 import com.example.one.po.Car;
+import com.example.one.po.TestTimeZone;
 import com.example.one.po.Transaction;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -95,6 +96,13 @@ public class JsonCar {
         throw new Exception("fail");
     }
 
+
+    @GetMapping("/testJsonTimeZone")
+    public void testJsonTimeZone() {
+        TestTimeZone t = new TestTimeZone();
+        t.setBirthday(new Date());
+        System.out.println(t);
+    }
 
     // JsonGenerator
     // Jackson JsonGenerator用于从Java对象（或代码从中生成JSON的任何数据结构）生成JSON。

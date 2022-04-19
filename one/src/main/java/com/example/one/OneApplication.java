@@ -4,6 +4,8 @@ import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.ServletComponentScan;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Profile;
 
 @SpringBootApplication
 // 注解Filter\ServletContextListener\HttpServlet - 如果没写这个@WebFilter不生效
@@ -16,5 +18,7 @@ public class OneApplication {
     public static void main(String[] args) {
         SpringApplication.run(OneApplication.class, args);
     }
+
+
 
 }

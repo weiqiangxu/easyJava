@@ -14,4 +14,7 @@ public class User {
 
     @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm")
     private Date birthday;
+
+    @JsonFormat(timezone = "GMT+8",pattern = "yyyy-MM-dd HH:mm")
+    private Date workday;
 }

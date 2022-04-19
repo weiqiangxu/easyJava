@@ -15,9 +15,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.MessageSource;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 
 @Slf4j
 @RunWith(SpringRunner.class)
@@ -58,10 +56,35 @@ public class LangApplicationTest {
     @Test
     public void testSelect() throws JsonProcessingException {
         List<User> userList = userMapper.selectList(null);
-        Assert.assertEquals(5, userList.size());
-        userList.forEach(System.out::println);
+        // Assert.assertEquals(3, userList.size());
         ObjectMapper objectMapper = new ObjectMapper();
         String s = objectMapper.writeValueAsString(userList);
         System.out.println(s);
+    }
+
+    @Test
+    public void testInsert() {
+        User u = new User();
+        u.setAge(18);
+        u.setName("hello");
+        u.setEmail("123@qq.com");
+        u.setWorkday(new Date());
+        u.setBirthday(new Date());
+        userMapper.insert(u);
+    }
+
+
+    @Test
+    public void testZone() {
+        TimeZone timeZone = Calendar.getInstance().getTimeZone();
+        System.out.println(timeZone);
+        // Asia/Shanghai
+        System.out.println(timeZone.getID());
+        // Thu Apr 14 23:09:22 CST 2022
+        System.out.println(new Date());
+        TimeZone t = TimeZone.getTimeZone("UTC");
+        TimeZone.setDefault(t);
+        // Thu Apr 14 15:09:22 UTC 2022
+        System.out.println(new Date());
     }
 }

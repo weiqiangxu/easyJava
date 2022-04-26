@@ -59,6 +59,14 @@ public class LangApplicationTest {
         // Assert.assertEquals(3, userList.size());
         ObjectMapper objectMapper = new ObjectMapper();
         String s = objectMapper.writeValueAsString(userList);
+        // birthday datetime
+        // workday timestamp
+        for (User u : userList){
+            System.out.println(u.getBirthday());
+        }
+        for (User u : userList){
+            System.out.println(u.getWorkday());
+        }
         System.out.println(s);
     }
 

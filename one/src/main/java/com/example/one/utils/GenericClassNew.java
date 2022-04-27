@@ -21,6 +21,9 @@ public class GenericClassNew<T> {
 
     public static void main(String[] args) {
         // 定义一个范型类
+        // 范型类都是定一个data去接收类名后面的 T
+        // 实例化的时候传入类型类型也将变为data的类型
+
         GenericClassNew<String> genericClass=new GenericClassNew<>();
         genericClass.setData("Generic Class");
         System.out.println(genericClass.getData());

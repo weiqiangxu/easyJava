@@ -16,8 +16,8 @@ public class ConsumerTest {
         testConsumer();
         testAndThen();
 
-        Consumer<? super T> doubleNumber = x -> {
-            System.out.println( x +"."+ x);
+        Consumer<? super Integer> doubleNumber = x -> {
+            System.out.println( x + x);
         };
         List<Integer> t = new ArrayList<Integer>();
         t.add(1);

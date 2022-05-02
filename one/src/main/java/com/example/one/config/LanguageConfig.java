@@ -16,6 +16,7 @@ public class LanguageConfig {
      *    当前默认为CHINA,zh_CN
      */
     @Bean
+    // 自动生成一个Bean对象并存储在IOC容器之中
     public SessionLocaleResolver localeResolver() {
         SessionLocaleResolver localeResolver = new SessionLocaleResolver();
         // 设置默认的语言处理

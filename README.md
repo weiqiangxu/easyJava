@@ -30,6 +30,8 @@
 21. spring i18n
 22. Message Queue
 23. springboot配置注入
+24. spring activity
+25. hu tool
 
 ### Java基础知识
 

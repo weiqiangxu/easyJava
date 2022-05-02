@@ -1,7 +1,11 @@
 package com.example.one.config;
 
 import com.example.one.interceptor.MyInterceptor;
+import com.example.one.po.Car;
+import org.apache.kafka.clients.admin.NewTopic;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.kafka.config.TopicBuilder;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -26,5 +30,13 @@ public class MyAppConfig implements WebMvcConfigurer {
         // 添加不被拦截路径
         String[] excludePath = {"/school/user/lists"};
         registry.addInterceptor(myInterceptor).addPathPatterns(path).excludePathPatterns(excludePath);
+    }
+
+    @Bean
+    // 产生一个Bean对象，然后这个Bean对象交给Spring管理 - 只会调用一次，Bean对象会放在自己的IOC容器之中
+    // 所在的类有注解 @Configuration 才会执行,否则是不会执行的
+    public Car car() {
+        System.out.println("hello car");
+        return new Car();
     }
 }

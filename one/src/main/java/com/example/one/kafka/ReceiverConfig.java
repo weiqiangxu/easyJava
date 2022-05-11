@@ -20,7 +20,7 @@ import java.util.Map;
 public class ReceiverConfig {
 
 
-    private String bootstrapServers = "0.0.0.0:9092";
+    private String bootstrapServers = "127.0.0.1:9092";
 
     @Bean
     public Map<String, Object> consumerConfigs() {

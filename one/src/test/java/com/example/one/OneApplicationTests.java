@@ -2,12 +2,14 @@ package com.example.one;
 
 import com.example.one.kafka.Receiver;
 import com.example.one.kafka.Sender;
+import lombok.extern.log4j.Log4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 // spring boot的单元测试只需要2个:@SpringBootTest 和 @Test
 @SpringBootTest
+@Log4j
 class OneApplicationTests {
 
     @Test

@@ -13,6 +13,7 @@ public class Receiver {
 
     @KafkaListener(topics = "mykafka")
     public void listen(@Payload String message) {
+        System.out.println(message);
         LOG.info("received message='{}'", message);
     }
 

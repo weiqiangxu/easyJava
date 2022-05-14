@@ -23,7 +23,6 @@ public class School {
 
     // 对象转为json字符串
     @RequestMapping("/user/list")
-//    @GetMapping("/get")
     public String get(){
         List<Person> listOfPersons = new ArrayList<Person>();
         listOfPersons.add(new Person(15, "John Doe", new Date()));
@@ -66,7 +65,7 @@ public class School {
     }
 
     @GetMapping("/update")
-    @OperationLogAnno(operatePage = "测试修改用户数据",operateType = "更新",bizType = "/aspect/update",operationType = OperationType.Write)
+    @OperationLogAnno(operatePage = "testPage",operateType = "testType",bizType = "/aspect/update",operationType = OperationType.Write)
     public void testUpdate(){
         System.out.println("hello");
     }

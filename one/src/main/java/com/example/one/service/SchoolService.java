@@ -15,10 +15,10 @@ public class SchoolService {
 
     // 使用注解给类快速赋值
     @Person(name="张三", sex = "男", age = 23)
-    private Human human1;
+    private Human human;
 
     public String getSchool(){
-        return human1.toString();
+        return human.toString();
     }
 
     // 注解实现

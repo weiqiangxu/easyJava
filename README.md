@@ -29,9 +29,14 @@
 20. spring异常处理机制
 21. spring i18n
 22. Message Queue
-23. springboot配置注入
+23. springBoot配置注入
 24. spring activity
 25. hu tool
+26. AOP切面
+27. self4j日志
+28. 自定义注解切面日志
+29. 自定义注解赋值对象
+30. 自定义注解生成代码
 
 ### Java基础知识
 

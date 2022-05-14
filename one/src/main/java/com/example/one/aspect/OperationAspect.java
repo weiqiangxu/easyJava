@@ -4,9 +4,8 @@ import cn.hutool.core.date.DateUtil;
 import com.example.one.annotation.OperationLogAnno;
 import com.example.one.po.OperationLog;
 import com.example.one.po.OperationType;
-import com.example.one.service.AspectLog;
+import com.example.one.service.AspectLogSave;
 import lombok.extern.slf4j.Slf4j;
-import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
 import org.aspectj.lang.reflect.MethodSignature;
@@ -19,10 +18,11 @@ import java.util.Date;
 @Slf4j
 @Aspect
 @Configuration
+// 注解切面日志
 public class OperationAspect {
 
     @Autowired
-    private AspectLog aspectLog;
+    private AspectLogSave aspectLog;
 
     /**
      * 自定义注解作为切点
@@ -47,6 +47,7 @@ public class OperationAspect {
 
         // 获取方法上声明的注解
         OperationLogAnno anno = objMethod.getDeclaredAnnotation(OperationLogAnno.class);
+        System.out.println(anno.operateType());
         //记录日志时间
         String formatDate = DateUtil.format(new Date(), "yyyy-MM-dd HH:mm:ss");
 

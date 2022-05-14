@@ -1,9 +1,12 @@
 package com.example.one.controller;
 
+import cn.hutool.core.date.DateUtil;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.example.one.annotation.OperationLogAnno;
 import com.example.one.po.ApiResponse;
+import com.example.one.po.OperationType;
 import com.example.one.po.Person;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -60,5 +63,11 @@ public class School {
         // 字符串和java对象完全不匹配的时候也不会炸，只是全部会设置为默认零值
         System.out.println(api.toString());
         return api.getMessage();
+    }
+
+    @GetMapping("/update")
+    @OperationLogAnno(operatePage = "测试修改用户数据",operateType = "更新",bizType = "/aspect/update",operationType = OperationType.Write)
+    public void testUpdate(){
+        System.out.println("hello");
     }
 }

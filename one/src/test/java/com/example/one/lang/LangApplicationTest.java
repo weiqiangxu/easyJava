@@ -22,14 +22,14 @@ import java.util.*;
 @SpringBootTest
 public class LangApplicationTest {
 
-    @Autowired
-    private MessageSource messageSource;
+//    @Autowired
+//    private MessageSource messageSource;
 
     @Test
     public void testI18n() {
-        String str = messageSource.getMessage("hello.world", new String[] {"嘻嘻"}, Locale.CHINA);
-        String str1 = messageSource.getMessage("hello.world", new String[] {"嗯嗯"}, Locale.US);
-        log.info("i18n测试：{}, {}", str,str1);
+//        String str = messageSource.getMessage("hello.world", new String[] {"嘻嘻"}, Locale.CHINA);
+//        String str1 = messageSource.getMessage("hello.world", new String[] {"嗯嗯"}, Locale.US);
+//        log.info("i18n测试：{}, {}", str,str1);
     }
 
     @Test

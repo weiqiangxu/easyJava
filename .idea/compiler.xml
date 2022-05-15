@@ -1,17 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="CompilerConfiguration">
+    <option name="USE_RELEASE_OPTION" value="false" />
     <annotationProcessing>
       <profile default="true" name="Default" enabled="true" />
       <profile name="Maven default annotation processors profile" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="common-mongo" />
+        <module name="lombook" />
+        <module name="common-redis" />
         <module name="one" />
+        <module name="common-logger" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="one" target="9" />
+    <bytecodeTargetLevel target="9">
+      <module name="common" target="18" />
+      <module name="common-logger" target="18" />
+      <module name="common-mongo" target="18" />
+      <module name="common-redis" target="18" />
+      <module name="lombook" target="1.8" />
+      <module name="one" target="1.8" />
     </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="lombook" options="" />
+      <module name="one" options="" />
+    </option>
   </component>
 </project>

@@ -1,0 +1,2 @@
+service/RedisClient.class
+service/RedisClient$RedisClientBuilder.class

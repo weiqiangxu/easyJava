@@ -166,6 +166,12 @@
             <artifactId>lombook</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
+        <!--syslog-->
+        <dependency>
+            <groupId>org.graylog2</groupId>
+            <artifactId>syslog4j</artifactId>
+            <version>0.9.60</version>
+        </dependency>
     </dependencies>
 
     <dependencyManagement>

@@ -33,10 +33,11 @@
 24. spring activity
 25. hu tool
 26. AOP切面
-27. self4j日志
+27. self4j日志-log4j深度学习 https://www.bilibili.com/video/BV1iJ411H74S?p=11
 28. 自定义注解切面日志
 29. 自定义注解赋值对象
 30. 自定义注解生成代码
+31. Logstash入门 https://www.bilibili.com/video/BV1q64y1u7qt?p=11
 
 ### Java基础知识
 

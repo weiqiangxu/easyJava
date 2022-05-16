@@ -8,6 +8,9 @@ import com.example.one.annotation.OperationLogAnno;
 import com.example.one.po.ApiResponse;
 import com.example.one.po.OperationType;
 import com.example.one.po.Person;
+import com.example.one.po.User;
+import com.example.one.service.SchoolService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -64,9 +67,21 @@ public class School {
         return api.getMessage();
     }
 
+    @Autowired
+    private SchoolService schoolService;
+
     @GetMapping("/update")
-    @OperationLogAnno(operatePage = "testPage",operateType = "testType",bizType = "/aspect/update",operationType = OperationType.Write)
     public void testUpdate(){
-        System.out.println("hello");
+        schoolService.getSchoolName(1);
+    }
+
+    @GetMapping("/testOption")
+    public void testOption(){
+        User u = new User();
+        u.setAge(18);
+        u.setBirthday(new Date());
+        u.setEmail("test@qq.com");
+        u.setWorkday(new Date());
+        schoolService.testSchoolName(u);
     }
 }

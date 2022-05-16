@@ -11,15 +11,15 @@
         <module name="common-mongo" />
         <module name="lombook" />
         <module name="common-redis" />
-        <module name="one" />
         <module name="common-logger" />
+        <module name="one" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel target="9">
-      <module name="common" target="18" />
-      <module name="common-logger" target="18" />
-      <module name="common-mongo" target="18" />
-      <module name="common-redis" target="18" />
+      <module name="common" target="17" />
+      <module name="common-logger" target="17" />
+      <module name="common-mongo" target="17" />
+      <module name="common-redis" target="17" />
       <module name="lombook" target="1.8" />
       <module name="one" target="1.8" />
     </bytecodeTargetLevel>

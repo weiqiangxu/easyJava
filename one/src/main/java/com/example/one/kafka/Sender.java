@@ -8,12 +8,12 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 // 示例地址: https://www.yiibai.com/kafka/spring-kafka-consume-producer.html
-@Service
+//@Service
 public class Sender {
 
     private static final Logger LOG = LoggerFactory.getLogger(Sender.class);
 
-    @Autowired
+//    @Autowired
     private KafkaTemplate<String, String> kafkaTemplate;
 
 

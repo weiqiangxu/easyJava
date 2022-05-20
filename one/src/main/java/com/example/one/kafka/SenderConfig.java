@@ -14,13 +14,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 // 示例地址: https://www.yiibai.com/kafka/spring-kafka-consume-producer.html
-@Configuration
+//@Configuration
 public class SenderConfig {
 
 
 
 
-    @Bean
+//    @Bean
     public Map<String, Object> producerConfigs() {
         Map<String, Object> props = new HashMap<>();
         props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "127.0.0.1:9092");
@@ -29,12 +29,12 @@ public class SenderConfig {
         return props;
     }
 
-    @Bean
+//    @Bean
     public ProducerFactory<String, String> producerFactory() {
         return new DefaultKafkaProducerFactory<>(producerConfigs());
     }
 
-    @Bean
+//    @Bean
     public KafkaTemplate<String, String> kafkaTemplate() {
         return new KafkaTemplate<>(producerFactory());
     }

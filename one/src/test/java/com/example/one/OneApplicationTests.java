@@ -14,14 +14,19 @@ class OneApplicationTests {
     void contextLoads() {
     }
 
-    @Autowired
-    private Sender sender;
+//    @Autowired
+//    private Sender sender;
 
     // 单元测试Sender
     @Test
     void testSender(){
-        sender.send("Spring Kafka Producer and Consumer Example");
+//        sender.send("Spring Kafka Producer and Consumer Example");
         System.out.println("hhh");
+    }
+
+    @Test
+    void testLogger(){
+        log.info("info");
     }
 
 

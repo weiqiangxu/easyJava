@@ -6,15 +6,15 @@ import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Service;
 
-@Service
+//@Service
 public class Receiver {
 
     private static final Logger LOG = LoggerFactory.getLogger(Receiver.class);
 
-    @KafkaListener(topics = "mykafka")
-    public void listen(@Payload String message) {
-        System.out.println(message);
-        LOG.info("received message='{}'", message);
-    }
+//    @KafkaListener(topics = "mykafka")
+//    public void listen(@Payload String message) {
+//        System.out.println(message);
+//        LOG.info("received message='{}'", message);
+//    }
 
 }

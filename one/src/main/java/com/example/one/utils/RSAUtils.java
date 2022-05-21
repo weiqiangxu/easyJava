@@ -15,10 +15,9 @@ import java.security.*;
 public class RSAUtils {
 
     private static final String encrypt_file = "/Users/xuweiqiang/nginx/www/php_rsa/encrypt_file.txt";
-
     private static final String private_key = "/Users/xuweiqiang/nginx/www/php_rsa/private_key.pem";
-
     private static final String public_key = "/Users/xuweiqiang/nginx/www/php_rsa/public_key.pem";
+    private static final String transformationCode = "RSA/ECB/PKCS1Padding";
 
     public static void main(String[] args) {
         byte[] encryptFile = FileUtil.readBytes(encrypt_file);
@@ -45,7 +44,7 @@ public class RSAUtils {
     // 返回 RSA 加密的结果
     public static String encryptRSA(Key publicKey, String text) {
         try {
-            Cipher rsa = Cipher.getInstance("RSA/ECB/PKCS1Padding");
+            Cipher rsa = Cipher.getInstance(transformationCode);
             rsa.init(Cipher.ENCRYPT_MODE, publicKey);
             byte[] originBytes = text.getBytes();
             //大于117时进行分段 加密
@@ -73,7 +72,7 @@ public class RSAUtils {
     public static String decryptRSA(Key privateKey, String content) {
         try {
             byte[] text = Base64.getDecoder().decode(content);
-            Cipher rsa = Cipher.getInstance("RSA/ECB/PKCS1Padding");
+            Cipher rsa = Cipher.getInstance(transformationCode);
             rsa.init(Cipher.DECRYPT_MODE, privateKey);
             //大于128时进行分段 解密
             int subLength = text.length / 128;

@@ -165,11 +165,11 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
+        <!--所需依赖-->
         <dependency>
             <groupId>cn.hutool</groupId>
-            <artifactId>hutool-core</artifactId>
-            <version>5.7.22</version>
-            <scope>compile</scope>
+            <artifactId>hutool-all</artifactId>
+            <version>5.7.5</version>
         </dependency>
         <dependency>
             <groupId>commons-io</groupId>
@@ -193,6 +193,11 @@
             <groupId>org.graylog2</groupId>
             <artifactId>syslog4j</artifactId>
             <version>0.9.60</version>
+        </dependency>
+        <dependency>
+            <groupId>io.netty</groupId>
+            <artifactId>netty-codec</artifactId>
+            <version>4.1.55.Final</version>
         </dependency>
     </dependencies>
 

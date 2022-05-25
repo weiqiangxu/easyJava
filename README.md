@@ -42,6 +42,11 @@
 33. com.alibaba.ttl.TransmittableThreadLocal
 34. MDC
 35. com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper如何实现获取class的key的
+36. @Async\@EnableAsync 异步会开多线程?
+37. spring.factories定义扫描类
+38. TaskDecorator\threadPoolTaskExecutor线程池
+
+https://developpaper.com/springboot-project-traceid-generation-log-printing/
 
 ### Java基础知识
 

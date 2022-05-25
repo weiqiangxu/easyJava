@@ -1,10 +1,14 @@
 package com.example.one;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.example.one.kafka.Sender;
+import com.example.one.po.User;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import java.util.List;
 
 @SpringBootTest
 @Slf4j
@@ -27,6 +31,13 @@ class OneApplicationTests {
     @Test
     void testLogger(){
         log.info("info");
+    }
+
+    @Test
+    public void selectList(){
+        LambdaQueryWrapper<User> lambdaQueryWrapper = new LambdaQueryWrapper();
+        lambdaQueryWrapper.like(User::getBirthday , "k").lt(User::getAge , 30);
+
     }
 
 

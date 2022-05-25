@@ -43,6 +43,8 @@ public class LambdaUtils {
      * 关键在于这个方法
      */
     public static SerializedLambda getSerializedLambda(Serializable fn) throws Exception {
+        // 函数式接口继承Serializable时，编译器在编译Lambda表达式时
+        // 生成了一个writeReplace方法，这个方法会返回SerializedLambda，可以反射调用这个方法
         Method method = fn.getClass().getDeclaredMethod("writeReplace");
         method.setAccessible(Boolean.TRUE);
         SerializedLambda lambda = (SerializedLambda) method.invoke(fn);
@@ -62,14 +64,19 @@ public class LambdaUtils {
         }
     }
 
+    // 仅仅使用与小驼峰
     public static void main(String[] args) throws Exception {
         // 保存jvm运行过程中生成的lambda字节码文件到指定路径
         //System.getProperties().put("jdk.internal.lambda.dumpProxyClasses", "F:/lambda");
-        String getName = LambdaUtils.convertToFieldName(User::getId);
-        String setName = LambdaUtils.convertToFieldName(User::setName);
-        String setUserName = LambdaUtils.convertToFieldName(User::setUserName);
+        String getId = LambdaUtils.convertToFieldName(User::getId);
+        System.out.println(getId);
+        String getName = LambdaUtils.convertToFieldName(User::getName);
         System.out.println(getName);
+        String setName = LambdaUtils.convertToFieldName(User::setName);
         System.out.println(setName);
-        System.out.println(setUserName);
+        String getUserName = LambdaUtils.convertToFieldName(User::getUserName);
+        System.out.println(getUserName);
+        String getSchoolName = LambdaUtils.convertToFieldName(User::getSchoolName);
+        System.out.println(getSchoolName);
     }
 }

@@ -38,6 +38,10 @@
 29. 自定义注解赋值对象
 30. 自定义注解生成代码
 31. Logstash入门 https://www.bilibili.com/video/BV1q64y1u7qt?p=11
+32. Filebeat配置
+33. com.alibaba.ttl.TransmittableThreadLocal
+34. MDC
+35. com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper如何实现获取class的key的
 
 ### Java基础知识
 

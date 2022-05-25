@@ -36,6 +36,7 @@ class OneApplicationTests {
     @Test
     public void selectList(){
         LambdaQueryWrapper<User> lambdaQueryWrapper = new LambdaQueryWrapper();
+//        User::getAge;
         lambdaQueryWrapper.like(User::getBirthday , "k").lt(User::getAge , 30);
 
     }

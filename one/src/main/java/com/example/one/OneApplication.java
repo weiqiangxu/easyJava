@@ -33,4 +33,10 @@ public class OneApplication {
     public static void main(String[] args) {
         SpringApplication.run(OneApplication.class, args);
     }
+
+    @Bean
+    MeterRegistryCustomizer<MeterRegistry> configurer(
+            @Value("${spring.application.name}") String applicationName) {
+        return (registry) -> registry.config().commonTags("application", applicationName);
+    }
 }

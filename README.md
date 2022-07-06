@@ -45,6 +45,7 @@
 36. @Async\@EnableAsync 异步会开多线程?
 37. spring.factories定义扫描类
 38. TaskDecorator\threadPoolTaskExecutor线程池
+39. prometheus
 
 https://developpaper.com/springboot-project-traceid-generation-log-printing/
 

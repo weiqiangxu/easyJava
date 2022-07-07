@@ -16,6 +16,7 @@ import java.util.Date;
 
 // @RestController相当于Controller加上ResponseBody
 // 定义为控制器
+@ResponseResult
 @Controller
 // 返回 json 格式
 @ResponseBody

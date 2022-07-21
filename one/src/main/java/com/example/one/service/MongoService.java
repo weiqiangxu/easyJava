@@ -1,25 +1,67 @@
 package com.example.one.service;
 
-import com.example.one.po.Person;
-import com.mongodb.client.MongoClients;
+
+import com.example.one.po.Student;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.mongodb.core.MongoOperations;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
-
-import static org.springframework.data.mongodb.core.query.Criteria.where;
 
 @Slf4j
 @Service
-public class MongoService {
+public class MongoService implements MongoServiceInterface {
 
-    public void getPerson(){
-        MongoOperations m = new MongoTemplate(MongoClients.create(), "database");
-        m.insert(new Person(1, "jack",new Date()));
-        Person p = m.findOne(new Query(where("name").is("Joe")), Person.class);
-        log.info("p:{}",p);
+    @Autowired
+    private MongoTemplate mongoTemplate;
+
+    @Override
+    public int insertStudent(Student student) {
+        try {
+            student.setId(1);
+            student.setUsername("jack");
+            mongoTemplate.insert(student);
+            return 1;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return -1;
+        }
     }
+
+    @Override
+    public int updateStudent(Student student) {
+        //通过query根据id查询出对应对象，通过update对象进行修改
+        Query query = new Query(Criteria.where("_id").is(student.getId()));
+        Update update = new Update().set("username", student.getUsername());
+        try {
+            mongoTemplate.updateFirst(query, update, Student.class);
+            return 1;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return -1;
+        }
+    }
+
+    @Override
+    public int removeStudent(Long id) {
+        Query query = new Query(Criteria.where("_id").is(id));
+        try {
+            mongoTemplate.remove(query, Student.class);
+            return 1;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return -1;
+        }
+    }
+
+    @Override
+    public Student findOne(Integer id) {
+        Query query = new Query(Criteria.where("_id").is(id));
+        Student one = mongoTemplate.findOne(query, Student.class);
+        return one;
+    }
+
 }

@@ -16,7 +16,7 @@ class OneApplicationTests {
 
     @Test
     public void getMongoData(){
-        mongoService.getPerson();
+        mongoService.findOne(1);
     }
 
 }

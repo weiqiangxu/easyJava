@@ -93,6 +93,6 @@ public class LangApplicationTest {
 
     @Test
     public void testMongoDB(){
-        mongoService.getPerson();
+        mongoService.findOne(1);
     }
 }

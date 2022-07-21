@@ -1,6 +1,6 @@
 package com.example.one.config;
 
-import com.example.one.annotation.ResponseResult;
+import com.example.one.config.ResponseResult;
 import com.example.one.po.ApiResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.MethodParameter;

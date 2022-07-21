@@ -1,9 +1,11 @@
 package com.example.one.utils;
 
-import net.lingala.zip4j.core.ZipFile;
+import net.lingala.zip4j.ZipFile;
 import net.lingala.zip4j.exception.ZipException;
 import net.lingala.zip4j.model.ZipParameters;
-import net.lingala.zip4j.util.Zip4jConstants;
+import net.lingala.zip4j.model.enums.CompressionLevel;
+import net.lingala.zip4j.model.enums.CompressionMethod;
+import net.lingala.zip4j.model.enums.EncryptionMethod;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -18,19 +20,17 @@ public class FourZipFile {
         FileInputStream fileInputStream = new FileInputStream(file);
         ZipParameters parameters = new ZipParameters();
         // 压缩方式
-        parameters.setCompressionMethod(Zip4jConstants.COMP_DEFLATE);
+        parameters.setCompressionMethod(CompressionMethod.DEFLATE);
         // 压缩级别
-        parameters.setCompressionLevel(Zip4jConstants.DEFLATE_LEVEL_NORMAL);
+        parameters.setCompressionLevel(CompressionLevel.NORMAL);
         // 开启加密
-        parameters.setSourceExternalStream(true);
+        parameters.setEncryptFiles(true);
         // 文件名称
         parameters.setFileNameInZip(fileName);
         if (!"".equals(passWord)) {
             parameters.setEncryptFiles(true);
             // 加密方式
-            parameters.setEncryptionMethod(Zip4jConstants.ENC_METHOD_STANDARD);
-            // 设置加密密码
-            parameters.setPassword(passWord.toCharArray());
+            parameters.setEncryptionMethod(EncryptionMethod.NONE);
         }
         try {
             ZipFile zipFile = new ZipFile(fileOutPath + fileName + ".zip");

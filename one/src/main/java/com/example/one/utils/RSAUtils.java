@@ -1,7 +1,6 @@
 package com.example.one.utils;
 
 import cn.hutool.core.io.FileUtil;
-import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.security.KeyFactory;
@@ -128,9 +127,6 @@ public class RSAUtils {
         final byte[] buffer = new byte[1024 * 4];
         while (-1 != (n = input.read(buffer))) {
             output.write(buffer, 0, n);
-        }
-        if (Security.getProvider(BouncyCastleProvider.PROVIDER_NAME) == null) {
-            Security.addProvider(new BouncyCastleProvider());
         }
         String privateKeyPEM = output.toString()
                 .replace("-----BEGIN PRIVATE KEY-----", "")

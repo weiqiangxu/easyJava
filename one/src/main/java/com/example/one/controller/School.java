@@ -49,7 +49,7 @@ public class School {
             jsonObject.put("DATE OF BIRTH", "2016/12/12 12:12:12");
             jsonArray.add(jsonObject);
         }
-        String j = jsonArray.toJSONString();
+        String j = jsonArray.toString();
         System.out.println(j);
     }
 

@@ -4,6 +4,7 @@ package com.example.one.lang;
 import com.example.one.mapper.UserMapper;
 import com.example.one.po.TestTimeZone;
 import com.example.one.po.User;
+import com.example.one.service.MongoService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
@@ -22,14 +23,14 @@ import java.util.*;
 @SpringBootTest
 public class LangApplicationTest {
 
-//    @Autowired
-//    private MessageSource messageSource;
+    //@Autowired
+    //private MessageSource messageSource;
 
     @Test
     public void testI18n() {
-//        String str = messageSource.getMessage("hello.world", new String[] {"嘻嘻"}, Locale.CHINA);
-//        String str1 = messageSource.getMessage("hello.world", new String[] {"嗯嗯"}, Locale.US);
-//        log.info("i18n测试：{}, {}", str,str1);
+        //String str = messageSource.getMessage("hello.world", new String[] {"嘻嘻"}, Locale.CHINA);
+        //String str1 = messageSource.getMessage("hello.world", new String[] {"嗯嗯"}, Locale.US);
+        //log.info("i18n测试：{}, {}", str,str1);
     }
 
     @Test
@@ -94,5 +95,13 @@ public class LangApplicationTest {
         TimeZone.setDefault(t);
         // Thu Apr 14 15:09:22 UTC 2022
         System.out.println(new Date());
+    }
+
+    @Autowired
+    private MongoService mongoService;
+
+    @Test
+    public void testMongoDB(){
+        mongoService.getPerson();
     }
 }

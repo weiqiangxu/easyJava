@@ -7,13 +7,12 @@ import org.springframework.boot.actuate.metrics.web.servlet.DefaultWebMvcTagsPro
 import org.springframework.boot.actuate.metrics.web.servlet.WebMvcTags;
 import org.springframework.boot.actuate.metrics.web.servlet.WebMvcTagsContributor;
 import org.springframework.boot.actuate.metrics.web.servlet.WebMvcTagsProvider;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
 
@@ -32,7 +31,7 @@ public class MyTagConfig implements WebMvcTagsProvider {
 
     private final List<WebMvcTagsContributor> contributors;
 
-    public MyWebMvcTagsProvider() {
+    public MyTagConfig() {
         this(false);
     }
 
@@ -42,11 +41,11 @@ public class MyTagConfig implements WebMvcTagsProvider {
      * @param contributors the contributors that will provide additional tags
      * @since 2.3.0
      */
-    public MyWebMvcTagsProvider(List<WebMvcTagsContributor> contributors) {
+    public MyTagConfig(List<WebMvcTagsContributor> contributors) {
         this(false, contributors);
     }
 
-    public MyWebMvcTagsProvider(boolean ignoreTrailingSlash) {
+    public MyTagConfig(boolean ignoreTrailingSlash) {
         this(ignoreTrailingSlash, Collections.emptyList());
     }
 
@@ -58,7 +57,7 @@ public class MyTagConfig implements WebMvcTagsProvider {
      * @param contributors the contributors that will provide additional tags
      * @since 2.3.0
      */
-    public MyWebMvcTagsProvider(boolean ignoreTrailingSlash, List<WebMvcTagsContributor> contributors) {
+    public MyTagConfig(boolean ignoreTrailingSlash, List<WebMvcTagsContributor> contributors) {
         this.ignoreTrailingSlash = ignoreTrailingSlash;
         this.contributors = contributors;
     }
@@ -75,7 +74,7 @@ public class MyTagConfig implements WebMvcTagsProvider {
      * @param exception the current exception, if any
      * @return tags to associate with metrics for the request and response exchange
      */
-    @Override public Iterable<Tag> getTags(HttpServletRequest request, HttpServletResponse response, Object handler, Throwable exception) {
+    public Iterable<Tag> getTags(HttpServletRequest request, HttpServletResponse response, Object handler, Throwable exception) {
         Tags tags = Tags.of( myMethod(request),WebMvcTags.uri(request, response, this.ignoreTrailingSlash),
                 WebMvcTags.exception(exception), WebMvcTags.status(response), WebMvcTags.outcome(response));
         for (WebMvcTagsContributor contributor : this.contributors) {
@@ -104,4 +103,12 @@ public class MyTagConfig implements WebMvcTagsProvider {
      *                unknown
      * @return tags to associate with metrics recorded for the request
      */
-    @Override public Iterable<Tag> getLongRequestTags(HttpServletRequest request, Objec
+    public Iterable<Tag> getLongRequestTags(HttpServletRequest request, Object handler) {
+        Tags tags = Tags.of(new Tag[]{WebMvcTags.method(request), WebMvcTags.uri(request, (HttpServletResponse)null, this.ignoreTrailingSlash)});
+        WebMvcTagsContributor contributor;
+        for(Iterator var4 = this.contributors.iterator(); var4.hasNext(); tags = tags.and(contributor.getLongRequestTags(request, handler))) {
+            contributor = (WebMvcTagsContributor)var4.next();
+        }
+        return tags;
+    }
+}

@@ -21,7 +21,7 @@
       <module name="common-logger" target="17" />
       <module name="common-mongo" target="17" />
       <module name="common-redis" target="17" />
-      <module name="lambda" target="18" />
+      <module name="lambda" target="17" />
       <module name="lombook" target="1.8" />
       <module name="one" target="9" />
     </bytecodeTargetLevel>

@@ -1,31 +1,15 @@
 package com.example.one;
 
 import io.micrometer.core.instrument.MeterRegistry;
-import org.apache.kafka.clients.admin.NewTopic;
-import org.apache.kafka.clients.producer.ProducerConfig;
-import org.apache.kafka.clients.producer.ProducerRecord;
-import org.apache.kafka.common.serialization.ByteArraySerializer;
-import org.apache.kafka.common.serialization.StringSerializer;
-import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.actuate.autoconfigure.elasticsearch.ElasticSearchRestHealthContributorAutoConfiguration;
 import org.springframework.boot.actuate.autoconfigure.metrics.MeterRegistryCustomizer;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Profile;
-import org.springframework.kafka.annotation.KafkaListener;
-import org.springframework.kafka.config.TopicBuilder;
-import org.springframework.kafka.core.DefaultKafkaProducerFactory;
-import org.springframework.kafka.core.KafkaTemplate;
-import org.springframework.kafka.core.ProducerFactory;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-
-@SpringBootApplication
+@SpringBootApplication(exclude = {ElasticSearchRestHealthContributorAutoConfiguration.class})
 // 注解Filter\ServletContextListener\HttpServlet - 如果没写这个@WebFilter不生效
 @ServletComponentScan
 public class OneApplication {

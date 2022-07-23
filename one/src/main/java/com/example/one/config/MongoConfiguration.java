@@ -1,5 +1,6 @@
 package com.example.one.config;
 
+import com.example.one.metrics.MyMongoMetricsCommandListener;
 import io.micrometer.core.instrument.MeterRegistry;
 import io.micrometer.core.instrument.binder.mongodb.MongoMetricsCommandListener;
 import org.springframework.boot.autoconfigure.mongo.MongoClientSettingsBuilderCustomizer;
@@ -15,6 +16,7 @@ public class MongoConfiguration {
      */
     @Bean
     public MongoClientSettingsBuilderCustomizer mongoClientSettingsBuilderCustomizer(MeterRegistry meterRegistry) {
-        return builder -> builder.addCommandListener(new MongoMetricsCommandListener(meterRegistry));
+        // return builder -> builder.addCommandListener(new MongoMetricsCommandListener(meterRegistry));
+        return builder -> builder.addCommandListener(new MyMongoMetricsCommandListener(meterRegistry));
     }
 }

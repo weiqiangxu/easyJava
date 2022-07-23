@@ -6,13 +6,14 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.actuate.autoconfigure.metrics.MeterRegistryCustomizer;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.data.elasticsearch.ElasticsearchDataAutoConfiguration;
 import org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration;
 import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication(exclude = {
         MybatisPlusAutoConfiguration.class,
-        MongoAutoConfiguration.class
+        ElasticsearchDataAutoConfiguration.class
 })
 // 注解Filter\ServletContextListener\HttpServlet - 如果没写这个@WebFilter不生效
 @ServletComponentScan

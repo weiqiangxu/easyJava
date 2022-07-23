@@ -21,8 +21,6 @@ public class MongoService implements MongoServiceInterface {
     @Override
     public int insertStudent(Student student) {
         try {
-            student.setId(1);
-            student.setUsername("jack");
             mongoTemplate.insert(student);
             return 1;
         } catch (Exception e) {
@@ -34,8 +32,8 @@ public class MongoService implements MongoServiceInterface {
     @Override
     public int updateStudent(Student student) {
         //通过query根据id查询出对应对象，通过update对象进行修改
-        Query query = new Query(Criteria.where("_id").is(student.getId()));
-        Update update = new Update().set("username", student.getUsername());
+        Query query = new Query();
+        Update update = new Update().set("username", "");
         try {
             mongoTemplate.updateFirst(query, update, Student.class);
             return 1;
@@ -59,8 +57,9 @@ public class MongoService implements MongoServiceInterface {
 
     @Override
     public Student findOne(Integer id) {
-        Query query = new Query(Criteria.where("_id").is(id));
+        Query query = new Query();
         Student one = mongoTemplate.findOne(query, Student.class);
+        System.out.println(one);
         return one;
     }
 

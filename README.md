@@ -59,4 +59,16 @@ https://developpaper.com/springboot-project-traceid-generation-log-printing/
 6. lombok builder
 
 ### 备注
-DK 8 中有关反射相关的功能自从 JDK 9 开始就已经被限制了，为了兼容原先的版本，需要在运行项目时添加 --add-opens java.base/java.lang=ALL-UNNAMED 选项来开启这种默认不被允许的行为
+JDK 8 中有关反射相关的功能自从 JDK 9 开始就已经被限制了，为了兼容原先的版本，需要在运行项目时添加 --add-opens java.base/java.lang=ALL-UNNAMED 选项来开启这种默认不被允许的行为
+
+### mongo指标
+
+```
+# HELP mongodb_driver_commands_seconds_max Timer of mongodb commands
+# TYPE mongodb_driver_commands_seconds_max gauge
+mongodb_driver_commands_seconds_max{application="one",cluster_id="62dbd0067c80cb0e7c84d5ab",command="buildInfo",server_address="127.0.0.1:27017",status="SUCCESS",} 0.008892208
+# HELP mongodb_driver_commands_seconds Timer of mongodb commands
+# TYPE mongodb_driver_commands_seconds summary
+mongodb_driver_commands_seconds_count{application="one",cluster_id="62dbd0067c80cb0e7c84d5ab",command="buildInfo",server_address="127.0.0.1:27017",status="SUCCESS",} 1.0
+mongodb_driver_commands_seconds_sum{application="one",cluster_id="62dbd0067c80cb0e7c84d5ab",command="buildInfo",server_address="127.0.0.1:27017",status="SUCCESS",} 0.008892208
+```
